@@ -1,98 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>All Season Pros</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Season Pros</title>
 
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
 
-<!-- Custom CSS -->
-<link rel="stylesheet" href="styles.css">
-
-<!-- Firebase JS SDK -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
-  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyC0yuyzuARGQ2SemMLZXfE_awXnawNvAZM",
-    authDomain: "all-season-pros.firebaseapp.com",
-    projectId: "all-season-pros",
-    storageBucket: "all-season-pros.firebasestorage.app",
-    messagingSenderId: "119792283815",
-    appId: "1:119792283815:web:43056bcf8211479b286b82",
-    measurementId: "G-4HVLQL6SVF"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
-
-  // Booking Form
-  document.addEventListener("DOMContentLoaded", () => {
-    const bookingForm = document.getElementById('bookingForm');
-    const successMsg = document.getElementById('successMsg');
-
-    bookingForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const phone = document.getElementById('phone').value;
-      const service = document.getElementById('service').value;
-      const date = document.getElementById('date').value;
-      const notes = document.getElementById('notes').value;
-      const location = document.getElementById('booking-location').value;
-
-      try {
-        await addDoc(collection(db, "bookings"), {
-          name, email, phone, service, date, notes, location,
-          timestamp: serverTimestamp()
-        });
-        successMsg.style.color = "green";
-        successMsg.textContent = "Booking submitted successfully!";
-        bookingForm.reset();
-      } catch (err) {
-        console.error(err);
-        successMsg.style.color = "red";
-        successMsg.textContent = "Error submitting booking. Try again.";
-      }
-    });
-  });
-
-  // Admin Login Form
-  document.addEventListener("DOMContentLoaded", () => {
-    const loginForm = document.getElementById('loginForm');
-    const loginMessage = document.getElementById('loginMessage');
-
-    if (loginForm) {
-      loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-
-        signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            loginMessage.style.color = "green";
-            loginMessage.textContent = "Login successful!";
-            window.location.href = "admin.html";
-          })
-          .catch((error) => {
-            loginMessage.style.color = "red";
-            loginMessage.textContent = "Invalid credentials. Try again.";
-          });
-      });
-    }
-  });
-</script>
-
-<!-- Google Maps API -->
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
-
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -111,7 +31,7 @@
         <li class="nav-item"><a class="nav-link" href="#booking">Book Now</a></li>
         <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="#admin-login">Admin</a></li>
+        <li class="nav-item"><a class="nav-link" href="#admin-panel">Admin</a></li>
       </ul>
     </div>
   </div>
@@ -122,7 +42,7 @@
   <div class="overlay"></div>
   <div class="container hero-content">
     <h1 class="display-4">All Season Pros</h1>
-    <p class="lead">Landscaping, Car Detailing, and Decoration Lights – All Year Round</p>
+    <p class="lead">Professional Landscaping, Car Detailing & Seasonal Decoration Lights</p>
     <a href="#booking" class="btn btn-success btn-lg">Book Now</a>
   </div>
 </section>
@@ -133,29 +53,29 @@
     <h2 class="text-center mb-4">Our Services</h2>
     <div class="row text-center">
       <div class="col-md-4 mb-3">
-        <div class="card h-100">
+        <div class="card">
           <div class="card-body">
             <h5 class="card-title">Lawn Care</h5>
-            <p class="card-text">Mowing, trimming, fertilizing, and seasonal leaf cleanup.</p>
-            <a href="#lawn-info" class="btn btn-success">Learn More</a>
+            <p class="card-text">Mowing, trimming, fertilization, and cleanup.</p>
+            <a href="#service-lawn" class="btn btn-success">View More</a>
           </div>
         </div>
       </div>
       <div class="col-md-4 mb-3">
-        <div class="card h-100">
+        <div class="card">
           <div class="card-body">
             <h5 class="card-title">Car Detailing</h5>
-            <p class="card-text">Full-service interior and exterior car detailing.</p>
-            <a href="#car-info" class="btn btn-success">Learn More</a>
+            <p class="card-text">Full interior & exterior cleaning and detailing.</p>
+            <a href="#service-car" class="btn btn-success">View More</a>
           </div>
         </div>
       </div>
       <div class="col-md-4 mb-3">
-        <div class="card h-100">
+        <div class="card">
           <div class="card-body">
             <h5 class="card-title">Decoration Lights</h5>
-            <p class="card-text">Seasonal and holiday outdoor decoration setup.</p>
-            <a href="#decor-info" class="btn btn-success">Learn More</a>
+            <p class="card-text">Holiday & seasonal decorations, October and Winter.</p>
+            <a href="#service-decor" class="btn btn-success">View More</a>
           </div>
         </div>
       </div>
@@ -163,49 +83,8 @@
   </div>
 </section>
 
-<!-- Detailed Service Sections -->
-<section id="lawn-info" class="py-5 bg-light">
-  <div class="container">
-    <h2>Lawn Care Details</h2>
-    <p>We provide weekly mowing, trimming, fertilization, weed control, and seasonal cleanup. Optional add-ons include hedge trimming and aeration.</p>
-    <h4>Prices & Packages</h4>
-    <ul>
-      <li>Single Visit: $50+</li>
-      <li>Basic Package: $75/month</li>
-      <li>Full Home Care Package: $250/month</li>
-      <li>Deluxe Package: $350/month</li>
-    </ul>
-  </div>
-</section>
-
-<section id="car-info" class="py-5">
-  <div class="container">
-    <h2>Car Detailing Details</h2>
-    <p>We clean, polish, and protect your vehicle inside and out. Includes vacuuming, shampoo, waxing, and tire cleaning.</p>
-    <h4>Prices & Packages</h4>
-    <ul>
-      <li>Basic Detail: $80</li>
-      <li>Full Detail: $150</li>
-      <li>Package Add-on: Monthly Car Care included in Full Home Care & Deluxe Packages</li>
-    </ul>
-  </div>
-</section>
-
-<section id="decor-info" class="py-5 bg-light">
-  <div class="container">
-    <h2>Decoration Light Details</h2>
-    <p>We design and install seasonal and holiday lighting, including Halloween, Christmas, and custom displays.</p>
-    <h4>Prices & Packages</h4>
-    <ul>
-      <li>Single Setup: $100+</li>
-      <li>Holiday Package: $250/season</li>
-      <li>Deluxe Package: Includes yearly holiday decor rotation</li>
-    </ul>
-  </div>
-</section>
-
 <!-- Packages Section -->
-<section id="packages" class="py-5">
+<section id="packages" class="py-5 bg-light">
   <div class="container">
     <h2 class="text-center mb-4">Packages</h2>
     <div class="accordion" id="packagesAccordion">
@@ -217,19 +96,19 @@
         </h2>
         <div id="collapseBasic" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
           <div class="accordion-body">
-            Weekly lawn mowing, trimming, and seasonal leaf cleanup.
+            Weekly lawn mowing, trimming, and cleanup.
           </div>
         </div>
       </div>
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingFull">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFull">
-            Full Home Care Package – $250/month
+            Full Package – $250/month
           </button>
         </h2>
         <div id="collapseFull" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
           <div class="accordion-body">
-            Lawn care + monthly car detailing + quarterly decoration installations.
+            Lawn care, car detailing, seasonal decoration setup, and minor painting tasks.
           </div>
         </div>
       </div>
@@ -241,7 +120,7 @@
         </h2>
         <div id="collapseDeluxe" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
           <div class="accordion-body">
-            Everything in Full Home Care + additional custom services on demand.
+            Everything in Full Package plus advanced detailing, full decoration design, and extra services.
           </div>
         </div>
       </div>
@@ -249,153 +128,84 @@
   </div>
 </section>
 
-<!-- Booking Form Section -->
-<section id="booking" class="py-5 bg-light">
+<!-- Booking Section -->
+<section id="booking" class="py-5">
   <div class="container">
-    <h2 class="text-center mb-4">Book Your Service</h2>
+    <h2 class="text-center mb-4">Book Our Services</h2>
     <form id="bookingForm">
-      <div class="row g-3">
-        <div class="col-md-6">
-          <label for="name" class="form-label">Full Name</label>
-          <input type="text" id="name" class="form-control" required>
-        </div>
-        <div class="col-md-6">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" class="form-control" required>
-        </div>
-        <div class="col-md-6">
-          <label for="phone" class="form-label">Phone</label>
-          <input type="tel" id="phone" class="form-control" required>
-        </div>
-        <div class="col-md-6">
-          <label for="service" class="form-label">Service</label>
-          <select id="service" class="form-select" required>
-            <option value="">Select a Service</option>
-            <option value="Lawn Care">Lawn Care</option>
-            <option value="Car Detailing">Car Detailing</option>
-            <option value="Decoration Lights">Decoration Lights</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label for="date" class="form-label">Preferred Date</label>
-          <input type="date" id="date" class="form-control" required>
-        </div>
-        <div class="col-md-6">
-          <label for="booking-location" class="form-label">Location</label>
-          <input type="text" id="booking-location" class="form-control" placeholder="Click a map area to fill automatically" required>
-        </div>
-        <div class="col-12">
-          <label for="notes" class="form-label">Additional Notes</label>
-          <textarea id="notes" class="form-control"></textarea>
-        </div>
+      <div class="mb-3">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" class="form-control" required>
       </div>
-      <button type="submit" class="btn btn-success mt-3">Submit Booking</button>
-      <p id="successMsg" class="mt-2"></p>
+      <div class="mb-3">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="service">Choose a Service</label>
+        <select id="service" class="form-control" required>
+          <option value="Lawn Care">Lawn Care</option>
+          <option value="Car Detailing">Car Detailing</option>
+          <option value="Decoration Lights">Decoration Lights</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="booking-location">Location</label>
+        <input type="text" id="booking-location" class="form-control" placeholder="Click a map area to fill automatically" required>
+      </div>
+      <div class="mb-3">
+        <label for="date">Preferred Date</label>
+        <input type="date" id="date" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="notes">Additional Notes</label>
+        <textarea id="notes" class="form-control"></textarea>
+      </div>
+      <button type="submit" class="btn btn-success">Submit Booking</button>
+      <p id="successMsg" class="text-success mt-2"></p>
     </form>
   </div>
 </section>
 
 <!-- Map Section -->
-<section id="map" class="py-5">
+<section id="map-section" class="py-5 bg-light">
   <div class="container">
-    <h2 class="text-center mb-4">Service Areas</h2>
-    <div id="serviceMap" style="height: 500px;"></div>
+    <h2 class="text-center mb-4">Service Area</h2>
+    <div id="map" style="height:500px;"></div>
   </div>
 </section>
 
-<script>
-  // Initialize Google Map
-  function initMap() {
-    const center = { lat: 37.8, lng: -85.9 }; // Center near Kentucky
-    const map = new google.maps.Map(document.getElementById('serviceMap'), {
-      zoom: 10,
-      center
-    });
-
-    const locations = [
-      { name: 'Meade County', lat: 37.9, lng: -86.1 },
-      { name: 'Bullitt County', lat: 37.97, lng: -85.65 },
-      { name: 'Radcliff', lat: 37.85, lng: -85.95 },
-      { name: 'Westpoint', lat: 37.86, lng: -86.0 },
-      { name: 'Elizabethtown', lat: 37.7, lng: -85.87 },
-      { name: 'Hillview', lat: 38.02, lng: -85.7 },
-      { name: 'Mt. Washington', lat: 38.03, lng: -85.59 }
-    ];
-
-    locations.forEach(loc => {
-      const marker = new google.maps.Marker({
-        position: { lat: loc.lat, lng: loc.lng },
-        map,
-        title: loc.name
-      });
-
-      marker.addListener('click', () => {
-        document.getElementById('booking-location').value = loc.name;
-      });
-    });
-  }
-
-  window.initMap = initMap;
-</script>
-
 <!-- Team Section -->
-<section id="team" class="py-5 bg-light">
+<section id="team" class="py-5">
   <div class="container">
-    <h2 class="text-center mb-4">Meet Our Team</h2>
+    <h2 class="text-center mb-4">Meet the Team</h2>
     <div class="row text-center">
       <div class="col-md-4 mb-3">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">Kurt Miller</h5>
-            <p class="card-text">Expert in lawn care and outdoor maintenance. Passionate about customer satisfaction.</p>
-          </div>
-        </div>
+        <h5>Kurt Miller</h5>
+        <p>Team member specializing in lawn care and detailing.</p>
       </div>
       <div class="col-md-4 mb-3">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">Braden Moore</h5>
-            <p class="card-text">Detail-oriented, specializes in car detailing and exterior cleaning services.</p>
-          </div>
-        </div>
+        <h5>Braden Moore</h5>
+        <p>Team member handling decoration lights and seasonal projects.</p>
       </div>
       <div class="col-md-4 mb-3">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">Jamarion Ferguson</h5>
-            <p class="card-text">Hands-on expert in decoration lighting and seasonal outdoor setups.</p>
-          </div>
-        </div>
+        <h5>Jamarion Ferguson</h5>
+        <p>Team member focusing on car detailing and client scheduling.</p>
       </div>
-      <!-- 3 empty slots for future members -->
-      <div class="col-md-4 mb-3"></div>
-      <div class="col-md-4 mb-3"></div>
-      <div class="col-md-4 mb-3"></div>
+      <!-- 3 empty slots for future team members -->
+      <div class="col-md-4 mb-3"><h5>Team Slot</h5><p>Coming soon</p></div>
+      <div class="col-md-4 mb-3"><h5>Team Slot</h5><p>Coming soon</p></div>
+      <div class="col-md-4 mb-3"><h5>Team Slot</h5><p>Coming soon</p></div>
     </div>
   </div>
 </section>
 
-<!-- Admin Login Section -->
-<section id="admin-login" class="py-5 bg-light">
-  <div class="container text-center" style="max-width: 400px;">
-    <h2 class="mb-4">Admin Login</h2>
-    <form id="loginForm">
-      <div class="mb-3">
-        <label for="loginEmail" class="form-label">Email</label>
-        <input type="email" id="loginEmail" class="form-control" required>
-      </div>
-      <div class="mb-3">
-        <label for="loginPassword" class="form-label">Password</label>
-        <input type="password" id="loginPassword" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-success w-100">Login</button>
-      <p id="loginMessage" class="text-danger mt-3"></p>
-    </form>
-  </div>
-</section>
-
 <!-- Contact Section -->
-<section id="contact" class="py-5">
+<section id="contact" class="py-5 bg-light">
   <div class="container text-center">
     <h2 class="mb-4">Contact Us</h2>
     <p>Phone: (502) 428-7961</p>
@@ -403,8 +213,54 @@
   </div>
 </section>
 
+<!-- Admin Management Section -->
+<section id="admin-panel" class="py-5 bg-light" style="display:none;">
+  <div class="container">
+    <h2 class="text-center mb-4">Admin Dashboard</h2>
+    <h4>Bookings</h4>
+    <table class="table table-striped" id="bookingsTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Service</th>
+          <th>Date</th>
+          <th>Location</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <h4 class="mt-5">Service Images</h4>
+    <form id="imageForm">
+      <div class="mb-3">
+        <label for="serviceSelect" class="form-label">Select Service</label>
+        <select id="serviceSelect" class="form-select">
+          <option value="lawn">Lawn Care</option>
+          <option value="car">Car Detailing</option>
+          <option value="decor">Decoration Lights</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="serviceImage" class="form-label">Choose Image</label>
+        <input type="file" id="serviceImage" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-success">Upload/Update Image</button>
+      <p id="imageMsg" class="mt-2"></p>
+    </form>
+  </div>
+</section>
+
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+
+<!-- Firebase Config -->
+<script src="firebase-config.js" defer></script>
+<!-- Main Script -->
+<script src="script.js" defer></script>
+
 </body>
 </html>
+
