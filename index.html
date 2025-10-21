@@ -9,17 +9,29 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
+  <!-- Custom CSS -->
   <style>
-    body { font-family: Arial, sans-serif; }
-    .hero-section { background: url('https://images.unsplash.com/photo-1505232070786-7b73c5f0a0e1') no-repeat center center; background-size: cover; height: 80vh; position: relative; display: flex; align-items: center; justify-content: center; color: white; text-align: center; }
-    .hero-section .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
-    .hero-content { position: relative; z-index: 2; }
-    .section-title { margin-bottom: 2rem; }
-    .team-member img { width: 100%; border-radius: 50%; }
+    body { scroll-behavior: smooth; }
+    .hero-section { 
+      background: url('https://via.placeholder.com/1600x600') no-repeat center center/cover;
+      position: relative; 
+      height: 500px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center;
+    }
+    .overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); }
+    .hero-content { position: relative; z-index: 2; text-align: center; color: white; }
     #map { height: 400px; width: 100%; margin-bottom: 1rem; }
+    .team-member img { border-radius: 50%; width: 150px; height: 150px; object-fit: cover; }
+    .accordion-button:not(.collapsed) { background-color: #198754; color: #fff; }
   </style>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -52,9 +64,9 @@
 <!-- Hero Section -->
 <section id="home" class="hero-section">
   <div class="overlay"></div>
-  <div class="container hero-content">
+  <div class="hero-content">
     <h1 class="display-4">All Season Pros</h1>
-    <p class="lead">Landscaping, Car Detailing, Decoration Lights & More!</p>
+    <p class="lead">Landscaping, Car Detailing, and Decoration Lights — All Year Round</p>
     <a href="#booking" class="btn btn-success btn-lg">Book Now</a>
   </div>
 </section>
@@ -62,56 +74,51 @@
 <!-- Services Section -->
 <section id="services" class="py-5">
   <div class="container">
-    <h2 class="text-center section-title">Our Services</h2>
+    <h2 class="text-center mb-4">Our Services</h2>
     <div class="accordion" id="servicesAccordion">
-      <!-- Lawn Care -->
+
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingLawn">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLawn">
-            Lawn Care
+            Lawn Care – $50+/visit
           </button>
         </h2>
         <div id="collapseLawn" class="accordion-collapse collapse" data-bs-parent="#servicesAccordion">
           <div class="accordion-body">
-            <strong>Pricing:</strong> $50+/visit<br>
-            Includes mowing, edging, trimming, leaf/debris removal.<br>
-            <strong>Packages:</strong> Basic, Full Home Care, Deluxe, Custom.<br>
-            <strong>Details:</strong> Seasonal fertilization, hedge trimming, lawn aeration available.
+            We provide mowing, edging, trimming, leaf/debris removal, and seasonal fertilization.
+            <br><strong>Packages:</strong> Basic, Full, Deluxe
           </div>
         </div>
       </div>
-      <!-- Car Detailing -->
+
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingDetailing">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDetailing">
-            Car Detailing
+            Car Detailing – $75+
           </button>
         </h2>
         <div id="collapseDetailing" class="accordion-collapse collapse" data-bs-parent="#servicesAccordion">
           <div class="accordion-body">
-            <strong>Pricing:</strong> $75-$250 depending on size and service<br>
-            Full interior/exterior detailing, waxing, tire shine, carpet cleaning.<br>
-            <strong>Packages:</strong> Quick Clean, Full Detail, Seasonal Detail, Custom.<br>
-            <strong>Details:</strong> Service available year-round with flexible scheduling.
+            Exterior wash, interior cleaning, waxing, tire and wheel cleaning.
+            <br><strong>Packages:</strong> Basic Wash, Full Interior & Exterior, Premium Protection
           </div>
         </div>
       </div>
-      <!-- Decoration Lights -->
+
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingDecor">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDecor">
-            Decoration Lights
+            Decoration Lights – $100+
           </button>
         </h2>
         <div id="collapseDecor" class="accordion-collapse collapse" data-bs-parent="#servicesAccordion">
           <div class="accordion-body">
-            <strong>Pricing:</strong> $100-$400 depending on setup<br>
-            Outdoor decorations for holidays, Halloween, and special events.<br>
-            <strong>Packages:</strong> Standard, Deluxe, Custom.<br>
-            <strong>Details:</strong> Includes installation and removal. Seasonal availability in Winter & October.
+            Installation of seasonal lights (Winter, Halloween, etc.) with removal included.
+            <br><strong>Packages:</strong> Standard, Deluxe, Custom
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -119,53 +126,41 @@
 <!-- Packages Section -->
 <section id="packages" class="py-5 bg-light">
   <div class="container">
-    <h2 class="text-center section-title">Packages</h2>
+    <h2 class="text-center mb-4">Packages</h2>
     <div class="accordion" id="packagesAccordion">
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingBasic">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBasic">
-            Basic Package
+            Basic Package – $75/month
           </button>
         </h2>
         <div id="collapseBasic" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
           <div class="accordion-body">
-            Simple services for small jobs, weekly lawn mowing, seasonal touch-ups.
+            Weekly lawn mowing, basic car detailing, or standard decoration light setup.
           </div>
         </div>
       </div>
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingFull">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFull">
-            Full Home Care
+            Full Package – $250/month
           </button>
         </h2>
         <div id="collapseFull" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
           <div class="accordion-body">
-            Full lawn care, monthly car detailing, decoration setup checks, gutter cleaning, painting maintenance.
+            Everything in Basic plus premium car detailing, full decoration setup, and additional lawn services.
           </div>
         </div>
       </div>
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingDeluxe">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDeluxe">
-            Deluxe Package
+            Deluxe Package – $350/month
           </button>
         </h2>
         <div id="collapseDeluxe" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
           <div class="accordion-body">
-            Everything in Full Home Care plus seasonal decoration setups and additional detailing services.
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingCustom">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCustom">
-            Custom Package
-          </button>
-        </h2>
-        <div id="collapseCustom" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
-          <div class="accordion-body">
-            Build your own combination of services. Flexible scheduling and pricing based on selections.
+            Full package plus priority scheduling, seasonal maintenance, and custom decoration options.
           </div>
         </div>
       </div>
@@ -176,7 +171,7 @@
 <!-- Booking Section -->
 <section id="booking" class="py-5">
   <div class="container">
-    <h2 class="text-center section-title">Book Our Services</h2>
+    <h2 class="text-center mb-4">Book Our Services</h2>
     <div id="map"></div>
     <form id="bookingForm">
       <div class="mb-3">
@@ -209,22 +204,22 @@
 <!-- Team Section -->
 <section id="team" class="py-5 bg-light">
   <div class="container">
-    <h2 class="text-center section-title">Meet the Team</h2>
+    <h2 class="text-center mb-4">Meet the Team</h2>
     <div class="row text-center">
       <div class="col-md-4 mb-4 team-member">
         <img src="https://via.placeholder.com/150" alt="Kurt Miller">
         <h5>Kurt Miller</h5>
-        <p>Team member with experience in landscaping, detailing, and seasonal decorations.</p>
+        <p>Experienced in landscaping, car detailing, and seasonal decoration installation.</p>
       </div>
       <div class="col-md-4 mb-4 team-member">
         <img src="https://via.placeholder.com/150" alt="Braden Moore">
         <h5>Braden Moore</h5>
-        <p>Skilled in car detailing and lawn care, ensures customer satisfaction.</p>
+        <p>Skilled in lawn care and detailing, ensuring excellent customer service.</p>
       </div>
       <div class="col-md-4 mb-4 team-member">
         <img src="https://via.placeholder.com/150" alt="Jamarion Ferguson">
         <h5>Jamarion Ferguson</h5>
-        <p>Handles decoration installations and maintenance with precision.</p>
+        <p>Handles decoration lights and maintenance with precision.</p>
       </div>
       <div class="col-md-4 mb-4 team-member">
         <img src="https://via.placeholder.com/150" alt="Future Member">
@@ -248,69 +243,42 @@
 <!-- About Section -->
 <section id="about" class="py-5">
   <div class="container">
-    <h2 class="text-center section-title">About Us</h2>
-    <p class="text-center">
-      All Season Pros provides professional landscaping, car detailing, and decoration lighting services throughout the year. We serve Bullitt County, Meade County, Radcliff, West Point, Elizabethtown, Hillview, and Mt. Washington. Our team is dedicated to quality and customer satisfaction.
-    </p>
+    <h2 class="text-center mb-4">About All Season Pros</h2>
+    <p class="text-center">We provide professional landscaping, car detailing, and seasonal decoration services year-round. Our team is committed to delivering high-quality work and excellent customer service across our service areas in Bullitt County, Meade County, Radcliff, West Point, Hillview, Mt. Washington, and Elizabethtown.</p>
   </div>
 </section>
 
 <!-- Contact Section -->
 <section id="contact" class="py-5 bg-light">
   <div class="container text-center">
-    <h2 class="section-title">Contact Us</h2>
+    <h2 class="mb-4">Contact Us</h2>
     <p>Phone: (502) 428-7961</p>
     <p>Email: allseasonpros@example.com</p>
   </div>
 </section>
 
-<!-- Scripts -->
+<!-- Bootstrap & Leaflet JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Firebase Config -->
 <script>
-  // Firebase Config
   const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT",
+    projectId: "YOUR_PROJECT_ID",
     storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    messagingSenderId: "SENDER_ID",
+    appId: "APP_ID"
   };
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
+</script>
 
-  // Booking form
-  const bookingForm = document.getElementById('bookingForm');
-  const successMsg = document.getElementById('successMsg');
-  const locationInput = document.getElementById('booking-location');
-
-  bookingForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const service = document.getElementById('service').value;
-    const location = locationInput.value;
-
-    db.collection('bookings').add({
-      name, email, service, location,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    })
-    .then(() => {
-      successMsg.textContent = "Booking submitted successfully!";
-      bookingForm.reset();
-    })
-    .catch(err => {
-      console.error(err);
-      successMsg.textContent = "Error submitting booking. Try again.";
-    });
-  });
-
-  // Leaflet Map
-  const map = L.map('map').setView([37.9, -85.4], 10); // Centered roughly on Bullitt/Meade area
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18
-  }).addTo(map);
+<!-- Map Initialization -->
+<script>
+  const map = L.map('map').setView([37.9, -85.5], 10);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
 
   const locations = {
     "Bullitt County": [37.984, -85.684],
@@ -325,9 +293,38 @@
   for (const [name, coords] of Object.entries(locations)) {
     const marker = L.marker(coords).addTo(map).bindPopup(name);
     marker.on('click', () => {
-      locationInput.value = name;
+      document.getElementById('booking-location').value = name;
     });
   }
 </script>
+
+<!-- Booking Form Submission -->
+<script>
+  const bookingForm = document.getElementById('bookingForm');
+  const successMsg = document.getElementById('successMsg');
+
+  bookingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const service = document.getElementById('service').value;
+    const location = document.getElementById('booking-location').value;
+
+    db.collection('bookings').add({
+      name, email, service, location,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+      successMsg.textContent = "Booking submitted successfully!";
+      bookingForm.reset();
+    })
+    .catch(err => {
+      console.error(err);
+      successMsg.textContent = "Error submitting booking. Try again.";
+    });
+  });
+</script>
+
 </body>
 </html>
+
