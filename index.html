@@ -1,204 +1,333 @@
-<title>All Season Pros</title> <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script> <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script> <script src="firebase-config.js" defer></script> <script src="script.js" defer></script>
-All Season Pros
-Home
-Services
-Packages
-Team
-Book Now
-About
-Contact
-All Season Pros
-Landscaping, Car Detailing & Holiday Decorations — All Year Round
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Season Pros</title>
 
-Book Now
-Our Services
-  <!-- Lawn Care -->
-  <div class="col-md-4">
-    <div class="card h-100 shadow-sm hover-card">
-      <img src="images/lawn-care.jpg" class="card-img-top" alt="Lawn Care">
-      <div class="card-body">
-        <h5 class="card-title">Lawn Care</h5>
-        <p class="card-text">Professional mowing, trimming, fertilization, and yard maintenance to keep your lawn healthy and beautiful.</p>
-        <a href="lawn-care.html" class="btn btn-success">Learn More</a>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+  <style>
+    body { font-family: Arial, sans-serif; }
+    .hero-section { background: url('https://images.unsplash.com/photo-1505232070786-7b73c5f0a0e1') no-repeat center center; background-size: cover; height: 80vh; position: relative; display: flex; align-items: center; justify-content: center; color: white; text-align: center; }
+    .hero-section .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+    .hero-content { position: relative; z-index: 2; }
+    .section-title { margin-bottom: 2rem; }
+    .team-member img { width: 100%; border-radius: 50%; }
+    #map { height: 400px; width: 100%; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">All Season Pros</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Services</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#services">All Services</a></li>
+            <li><a class="dropdown-item" href="#packages">Packages</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#booking">Book Now</a></li>
+        <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="home" class="hero-section">
+  <div class="overlay"></div>
+  <div class="container hero-content">
+    <h1 class="display-4">All Season Pros</h1>
+    <p class="lead">Landscaping, Car Detailing, Decoration Lights & More!</p>
+    <a href="#booking" class="btn btn-success btn-lg">Book Now</a>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section id="services" class="py-5">
+  <div class="container">
+    <h2 class="text-center section-title">Our Services</h2>
+    <div class="accordion" id="servicesAccordion">
+      <!-- Lawn Care -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingLawn">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLawn">
+            Lawn Care
+          </button>
+        </h2>
+        <div id="collapseLawn" class="accordion-collapse collapse" data-bs-parent="#servicesAccordion">
+          <div class="accordion-body">
+            <strong>Pricing:</strong> $50+/visit<br>
+            Includes mowing, edging, trimming, leaf/debris removal.<br>
+            <strong>Packages:</strong> Basic, Full Home Care, Deluxe, Custom.<br>
+            <strong>Details:</strong> Seasonal fertilization, hedge trimming, lawn aeration available.
+          </div>
+        </div>
+      </div>
+      <!-- Car Detailing -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingDetailing">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDetailing">
+            Car Detailing
+          </button>
+        </h2>
+        <div id="collapseDetailing" class="accordion-collapse collapse" data-bs-parent="#servicesAccordion">
+          <div class="accordion-body">
+            <strong>Pricing:</strong> $75-$250 depending on size and service<br>
+            Full interior/exterior detailing, waxing, tire shine, carpet cleaning.<br>
+            <strong>Packages:</strong> Quick Clean, Full Detail, Seasonal Detail, Custom.<br>
+            <strong>Details:</strong> Service available year-round with flexible scheduling.
+          </div>
+        </div>
+      </div>
+      <!-- Decoration Lights -->
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingDecor">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDecor">
+            Decoration Lights
+          </button>
+        </h2>
+        <div id="collapseDecor" class="accordion-collapse collapse" data-bs-parent="#servicesAccordion">
+          <div class="accordion-body">
+            <strong>Pricing:</strong> $100-$400 depending on setup<br>
+            Outdoor decorations for holidays, Halloween, and special events.<br>
+            <strong>Packages:</strong> Standard, Deluxe, Custom.<br>
+            <strong>Details:</strong> Includes installation and removal. Seasonal availability in Winter & October.
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Car Detailing -->
-  <div class="col-md-4">
-    <div class="card h-100 shadow-sm hover-card">
-      <img src="images/car-detailing.jpg" class="card-img-top" alt="Car Detailing">
-      <div class="card-body">
-        <h5 class="card-title">Car Detailing</h5>
-        <p class="card-text">Full interior and exterior cleaning, waxing, and paint protection to keep your vehicle looking new.</p>
-        <a href="car-detailing.html" class="btn btn-success">Learn More</a>
+<!-- Packages Section -->
+<section id="packages" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center section-title">Packages</h2>
+    <div class="accordion" id="packagesAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingBasic">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBasic">
+            Basic Package
+          </button>
+        </h2>
+        <div id="collapseBasic" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
+          <div class="accordion-body">
+            Simple services for small jobs, weekly lawn mowing, seasonal touch-ups.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingFull">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFull">
+            Full Home Care
+          </button>
+        </h2>
+        <div id="collapseFull" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
+          <div class="accordion-body">
+            Full lawn care, monthly car detailing, decoration setup checks, gutter cleaning, painting maintenance.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingDeluxe">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDeluxe">
+            Deluxe Package
+          </button>
+        </h2>
+        <div id="collapseDeluxe" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
+          <div class="accordion-body">
+            Everything in Full Home Care plus seasonal decoration setups and additional detailing services.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingCustom">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCustom">
+            Custom Package
+          </button>
+        </h2>
+        <div id="collapseCustom" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
+          <div class="accordion-body">
+            Build your own combination of services. Flexible scheduling and pricing based on selections.
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Decorations & Lights -->
-  <div class="col-md-4">
-    <div class="card h-100 shadow-sm hover-card">
-      <img src="images/decorations-lights.jpg" class="card-img-top" alt="Decorations & Lights">
-      <div class="card-body">
-        <h5 class="card-title">Decorations & Lights</h5>
-        <p class="card-text">Outdoor seasonal and holiday decoration installation including setup, removal, and safe handling.</p>
-        <a href="decorations-lights.html" class="btn btn-success">Learn More</a>
+<!-- Booking Section -->
+<section id="booking" class="py-5">
+  <div class="container">
+    <h2 class="text-center section-title">Book Our Services</h2>
+    <div id="map"></div>
+    <form id="bookingForm">
+      <div class="mb-3">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="service">Choose a Service</label>
+        <select id="service" class="form-control" required>
+          <option value="">Select a Service</option>
+          <option value="Lawn Care">Lawn Care</option>
+          <option value="Car Detailing">Car Detailing</option>
+          <option value="Decoration Lights">Decoration Lights</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="booking-location">Location</label>
+        <input type="text" id="booking-location" class="form-control" placeholder="Click a map location" required>
+      </div>
+      <button type="submit" class="btn btn-success">Submit Booking</button>
+      <p id="successMsg" class="text-success mt-2"></p>
+    </form>
+  </div>
+</section>
+
+<!-- Team Section -->
+<section id="team" class="py-5 bg-light">
+  <div class="container">
+    <h2 class="text-center section-title">Meet the Team</h2>
+    <div class="row text-center">
+      <div class="col-md-4 mb-4 team-member">
+        <img src="https://via.placeholder.com/150" alt="Kurt Miller">
+        <h5>Kurt Miller</h5>
+        <p>Team member with experience in landscaping, detailing, and seasonal decorations.</p>
+      </div>
+      <div class="col-md-4 mb-4 team-member">
+        <img src="https://via.placeholder.com/150" alt="Braden Moore">
+        <h5>Braden Moore</h5>
+        <p>Skilled in car detailing and lawn care, ensures customer satisfaction.</p>
+      </div>
+      <div class="col-md-4 mb-4 team-member">
+        <img src="https://via.placeholder.com/150" alt="Jamarion Ferguson">
+        <h5>Jamarion Ferguson</h5>
+        <p>Handles decoration installations and maintenance with precision.</p>
+      </div>
+      <div class="col-md-4 mb-4 team-member">
+        <img src="https://via.placeholder.com/150" alt="Future Member">
+        <h5>Future Member</h5>
+        <p>Coming soon.</p>
+      </div>
+      <div class="col-md-4 mb-4 team-member">
+        <img src="https://via.placeholder.com/150" alt="Future Member">
+        <h5>Future Member</h5>
+        <p>Coming soon.</p>
+      </div>
+      <div class="col-md-4 mb-4 team-member">
+        <img src="https://via.placeholder.com/150" alt="Future Member">
+        <h5>Future Member</h5>
+        <p>Coming soon.</p>
       </div>
     </div>
   </div>
+</section>
 
-</div>
-Packages
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingBasic">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBasic">
-        Basic Package – $75/month
-      </button>
-    </h2>
-    <div id="collapseBasic" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
-      <div class="accordion-body">
-        Lawn care weekly, basic car wash, seasonal yard cleanup.
-      </div>
-    </div>
+<!-- About Section -->
+<section id="about" class="py-5">
+  <div class="container">
+    <h2 class="text-center section-title">About Us</h2>
+    <p class="text-center">
+      All Season Pros provides professional landscaping, car detailing, and decoration lighting services throughout the year. We serve Bullitt County, Meade County, Radcliff, West Point, Elizabethtown, Hillview, and Mt. Washington. Our team is dedicated to quality and customer satisfaction.
+    </p>
   </div>
+</section>
 
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingFull">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFull">
-        Full Home Care – $250/month
-      </button>
-    </h2>
-    <div id="collapseFull" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
-      <div class="accordion-body">
-        Lawn care, full car detailing, monthly pressure washing, seasonal decoration setup.
-      </div>
-    </div>
+<!-- Contact Section -->
+<section id="contact" class="py-5 bg-light">
+  <div class="container text-center">
+    <h2 class="section-title">Contact Us</h2>
+    <p>Phone: (502) 428-7961</p>
+    <p>Email: allseasonpros@example.com</p>
   </div>
+</section>
 
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingDeluxe">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDeluxe">
-        Deluxe Package – $350/month
-      </button>
-    </h2>
-    <div id="collapseDeluxe" class="accordion-collapse collapse" data-bs-parent="#packagesAccordion">
-      <div class="accordion-body">
-        All Full Home Care services plus advanced detailing, holiday lighting maintenance, and custom lawn treatments.
-      </div>
-    </div>
-  </div>
-
-</div>
-Meet the Team
-  <!-- Team Member Slots -->
-  <div class="col-md-4 col-lg-2">
-    <div class="card h-100 text-center shadow-sm">
-      <img src="images/team1.jpg" class="card-img-top" alt="Team Member">
-      <div class="card-body">
-        <h5 class="card-title">Kurt Miller</h5>
-        <p class="card-text">Expert in lawn care and landscaping. Works hard to keep properties looking pristine.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4 col-lg-2">
-    <div class="card h-100 text-center shadow-sm">
-      <img src="images/team2.jpg" class="card-img-top" alt="Team Member">
-      <div class="card-body">
-        <h5 class="card-title">Braden Moore</h5>
-        <p class="card-text">Specializes in car detailing and pressure washing. Ensures every detail shines.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4 col-lg-2">
-    <div class="card h-100 text-center shadow-sm">
-      <img src="images/team3.jpg" class="card-img-top" alt="Team Member">
-      <div class="card-body">
-        <h5 class="card-title">Jamarion Ferguson</h5>
-        <p class="card-text">Handles decorations and lighting installations. Creative and precise work guaranteed.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Placeholder Slots -->
-  <div class="col-md-4 col-lg-2">
-    <div class="card h-100 text-center shadow-sm">
-      <img src="images/team-placeholder.jpg" class="card-img-top" alt="Team Member">
-      <div class="card-body">
-        <h5 class="card-title">Team Member</h5>
-        <p class="card-text">Coming soon</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4 col-lg-2">
-    <div class="card h-100 text-center shadow-sm">
-      <img src="images/team-placeholder.jpg" class="card-img-top" alt="Team Member">
-      <div class="card-body">
-        <h5 class="card-title">Team Member</h5>
-        <p class="card-text">Coming soon</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-4 col-lg-2">
-    <div class="card h-100 text-center shadow-sm">
-      <img src="images/team-placeholder.jpg" class="card-img-top" alt="Team Member">
-      <div class="card-body">
-        <h5 class="card-title">Team Member</h5>
-        <p class="card-text">Coming soon</p>
-      </div>
-    </div>
-  </div>
-
-</div>
-Book Our Services
-Full Name
-  <div class="mb-3">
-    <label for="email">Email</label>
-    <input type="email" id="email" class="form-control" required>
-  </div>
-
-  <div class="mb-3">
-    <label for="phone">Phone</label>
-    <input type="tel" id="phone" class="form-control" required>
-  </div>
-
-  <div class="mb-3">
-    <label for="service">Choose a Service</label>
-    <select id="service" class="form-control" required>
-      <option value="Lawn Care">Lawn Care</option>
-      <option value="Car Detailing">Car Detailing</option>
-      <option value="Decorations & Lights">Decorations & Lights</option>
-    </select>
-  </div>
-
-  <div class="mb-3">
-    <label for="booking-location">Location</label>
-    <input type="text" id="booking-location" class="form-control" placeholder="Click a map area to fill automatically" required>
-  </div>
-
-  <div class="mb-3">
-    <label for="date">Preferred Date</label>
-    <input type="date" id="date" class="form-control" required>
-  </div>
-
-  <div class="mb-3">
-    <label for="notes">Additional Notes</label>
-    <textarea id="notes" class="form-control"></textarea>
-  </div>
-
-  <button type="submit" class="btn btn-success">Submit Booking</button>
-  <p id="successMsg" class="text-success mt-2"></p>
-</form>
-About All Season Pros
-All Season Pros provides professional, reliable landscaping, car detailing, and seasonal decoration services. Our team delivers high-quality results all year round. We cover Bullitt County, Meade County, Radcliff, West Point, Elizabethtown, Hillview, and Mt. Washington by Shepherdsville.
-
-Contact Us
-Phone: (502) 428-7961
-
-Email: allseasonpros@gmail.com
-
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  // Firebase Config
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT",
+    storageBucket: "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  // Booking form
+  const bookingForm = document.getElementById('bookingForm');
+  const successMsg = document.getElementById('successMsg');
+  const locationInput = document.getElementById('booking-location');
+
+  bookingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const service = document.getElementById('service').value;
+    const location = locationInput.value;
+
+    db.collection('bookings').add({
+      name, email, service, location,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+      successMsg.textContent = "Booking submitted successfully!";
+      bookingForm.reset();
+    })
+    .catch(err => {
+      console.error(err);
+      successMsg.textContent = "Error submitting booking. Try again.";
+    });
+  });
+
+  // Leaflet Map
+  const map = L.map('map').setView([37.9, -85.4], 10); // Centered roughly on Bullitt/Meade area
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18
+  }).addTo(map);
+
+  const locations = {
+    "Bullitt County": [37.984, -85.684],
+    "Meade County": [37.890, -85.590],
+    "Radcliff": [37.874, -85.931],
+    "West Point": [37.945, -85.790],
+    "Elizabethtown": [37.693, -85.859],
+    "Hillview": [37.911, -85.637],
+    "Mt. Washington": [38.033, -85.503]
+  };
+
+  for (const [name, coords] of Object.entries(locations)) {
+    const marker = L.marker(coords).addTo(map).bindPopup(name);
+    marker.on('click', () => {
+      locationInput.value = name;
+    });
+  }
+</script>
+</body>
+</html>
